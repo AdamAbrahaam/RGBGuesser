@@ -1,7 +1,14 @@
 <template>
-  <div id="app" class="sides">
-    <Home class="side" />
-    <div class="side">a</div>
+  <div id="app">
+    <div id="background" />
+
+    <div class="sides">
+      <div class="logo">RGB Guesser</div>
+      <div class="picker">
+        Pick a color
+        <Home />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,22 +25,43 @@ export default class App extends Vue {}
 </script>
 
 <style lang="scss">
+#background,
+.sides {
+  position: absolute;
+}
+
+#background {
+  width: 100px;
+  height: 100px;
+  display: block;
+  border-radius: 50%;
+
+  transition: transform 2s;
+  transform-origin: center center;
+}
+
 .sides {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
   width: 100%;
   height: 100%;
 }
 
-.side {
-  width: 50vw;
-  height: 100vh;
+.logo {
+  height: 40vh;
+}
+
+.picker {
+  margin: auto;
+  width: auto;
+  height: 60vh;
 }
 
 body {
   margin: 0;
   padding: 0;
+  overflow: hidden;
 }
 
 #app {

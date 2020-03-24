@@ -5,7 +5,7 @@
       :key="color.red"
       :style="`background: rgb(${color.red}, ${color.green}, ${color.blue})`"
       class="color"
-      @click="compareColors($event.target.style.backgroundColor)"
+      @click="compareColors($event.target)"
     />
   </div>
 </template>
@@ -20,9 +20,9 @@ interface RGB {
 }
 
 enum difficultyLevel {
-  EASY = 3,
-  MEDIUM = 6,
-  HARD = 9
+  EASY = 2,
+  MEDIUM = 5,
+  HARD = 7
 }
 
 @Component({})
@@ -46,11 +46,25 @@ export default class Home extends Vue {
     this.sortColors();
   }
 
-  compareColors(color: string) {
-    console.log(color + " - " + this.winner);
+  compareColors(target: HTMLElement): void {
+    const color = target.style.backgroundColor;
+    console.log(target);
     if (color === this.winner) {
-      console.log("win");
+      this.setBackground(target);
     }
+  }
+
+  setBackground(target: HTMLElement): void {
+    const background = document.getElementById("background");
+
+    if (!background) {
+      return;
+    }
+
+    background.style.background = target.style.backgroundColor;
+    background.style.left = `${target.offsetLeft}px`;
+    background.style.top = `${target.offsetTop}px`;
+    background.style.transform = "scale(25)";
   }
 
   sortColors(): void {
@@ -88,11 +102,17 @@ export default class Home extends Vue {
 <style scoped lang="scss">
 .colors {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-end;
 }
 
 .color {
-  width: 100%;
-  height: 100%;
+  width: 100px;
+  height: 100px;
+  display: block;
+  border-radius: 50%;
+  margin: 30px;
+  cursor: pointer;
 }
 </style>
